@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/node",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "semi": false
+      }
+    ],
+    "no-useless-constructor": "off",
+    "camelcase": "off"
+  }
+}
