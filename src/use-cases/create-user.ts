@@ -13,7 +13,7 @@ interface CreateUserResponse {
   user: User
 }
 
-export class createUserUseCase {
+export class CreateUserUseCase {
   constructor(private userUseCaseRepository: UsersRepository) {}
 
   async execute({
