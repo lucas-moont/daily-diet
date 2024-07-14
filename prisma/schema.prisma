@@ -14,14 +14,14 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  name       String
-  email      String   @unique
-  password_hash   String
-  created_at DateTime @default(now())
-  meals      Meal[]
-  current_streak Int @default(0)
-  longest_streak Int @default(0)
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  password_hash  String
+  created_at     DateTime @default(now())
+  meals          Meal[]
+  current_streak Int      @default(0)
+  longest_streak Int      @default(0)
 
   @@map("users")
 }
@@ -29,6 +29,7 @@ model User {
 model Meal {
   id           String   @id @default(uuid())
   name         String
+  description  String
   create_at    DateTime
   part_of_diet Boolean  @default(true)
   User         User?    @relation(fields: [userId], references: [id])
