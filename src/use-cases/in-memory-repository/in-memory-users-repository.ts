@@ -50,11 +50,14 @@ export class InMemoryUsersRepository implements UsersRepository {
         this.users[userIndex].current_streak >
         this.users[userIndex].longest_streak
       ) {
-        this.users[userIndex].longest_streak =
-          this.users[userIndex].current_streak
+        this.update_longest_streak(userIndex)
       }
     } else {
       this.users[userIndex].current_streak = 0
     }
+  }
+
+  async update_longest_streak(index: number) {
+    this.users[index].longest_streak = this.users[index].current_streak
   }
 }

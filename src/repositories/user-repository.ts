@@ -5,4 +5,5 @@ export interface UsersRepository {
   create(data: Prisma.UserCreateInput): Promise<User>
   update_current_streak(part_of_diet: boolean, id: string): void
   findById(id: string): Promise<User | null>
+  update_longest_streak(index: number): void
 }
