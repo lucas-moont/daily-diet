@@ -3,10 +3,10 @@ import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
 
 interface CreateMealRequest {
-  name: String
-  description: String
-  part_of_diet: Boolean
-  userId: String
+  name: string
+  description: string
+  part_of_diet: boolean
+  user_id: string
 }
 
 interface CreateMealResponse {
@@ -23,6 +23,17 @@ export class CreateMealUseCase {
     name,
     description,
     part_of_diet,
-    userId,
-  }: CreateMealRequest): Promise<CreateMealResponse> {}
+    user_id,
+  }: CreateMealRequest): Promise<CreateMealResponse> {
+    const meal = await this.mealUserRepository.create({
+      name,
+      description,
+      part_of_diet,
+      user_id,
+    })
+
+    return {
+      meal,
+    }
+  }
 }
