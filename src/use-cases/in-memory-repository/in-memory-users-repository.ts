@@ -30,4 +30,31 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return userFound
   }
+
+  async findById(id: string) {
+    const userFound = this.users.find((user) => user.id === id)
+
+    if (!userFound) {
+      return null
+    }
+
+    return userFound
+  }
+
+  async update_current_streak(part_of_diet: boolean, id: string) {
+    const userIndex = this.users.findIndex((user) => user.id === id)
+
+    if (part_of_diet === true) {
+      this.users[userIndex].current_streak++
+      if (
+        this.users[userIndex].current_streak >
+        this.users[userIndex].longest_streak
+      ) {
+        this.users[userIndex].longest_streak =
+          this.users[userIndex].current_streak
+      }
+    } else {
+      this.users[userIndex].current_streak = 0
+    }
+  }
 }
