@@ -30,8 +30,8 @@ model Meal {
   id           String   @id @default(uuid())
   name         String
   description  String
-  create_at    DateTime
+  created_at   DateTime
   part_of_diet Boolean  @default(true)
-  User         User?    @relation(fields: [userId], references: [id])
-  userId       String?
+  User         User?    @relation(fields: [user_id], references: [id])
+  user_id      String
 }
