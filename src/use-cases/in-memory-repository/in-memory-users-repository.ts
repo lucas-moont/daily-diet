@@ -43,7 +43,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async update_current_streak(part_of_diet: boolean, id: string) {
     const userIndex = this.users.findIndex((user) => user.id === id)
-
+    // TODO: create logic for when user is non existent
     if (part_of_diet === true) {
       this.users[userIndex].current_streak++
       if (

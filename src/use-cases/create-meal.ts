@@ -25,12 +25,15 @@ export class CreateMealUseCase {
     part_of_diet,
     user_id,
   }: CreateMealRequest): Promise<CreateMealResponse> {
+    // TODO: IF USER DOES NOT EXIST, SEND AN ERROR
     const meal = await this.mealUserRepository.create({
       name,
       description,
       part_of_diet,
       user_id,
     })
+
+    await this.userRepository.update_current_streak(part_of_diet, user_id)
 
     return {
       meal,
