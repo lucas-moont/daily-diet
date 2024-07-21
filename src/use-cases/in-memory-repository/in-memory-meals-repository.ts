@@ -29,4 +29,8 @@ export class InMemoryMealsRepository implements MealRepository {
 
     return meal
   }
+
+  async update(mealsInput: Prisma.MealUpdateInput) {
+    
+  }
 }

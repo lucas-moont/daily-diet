@@ -1,6 +1,7 @@
 import { MealRepository } from '@/repositories/meal-repository'
 import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
+import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 
 interface UpdateMealRequestUseCase {
   userId: string
@@ -24,12 +25,18 @@ export class UpdateMealUseCase {
   async execute({
     userId,
     mealId,
-    meal,
     name,
     description,
     created_at,
     part_of_diet,
   }: UpdateMealRequestUseCase): Promise<UpdateMealUseCaseResponse> {
-    
+    const meal = await this.mealsRepository.findById(mealId)
+    const user = await this.usersRepository.findById(userId)
+
+    if (!meal || !user) {
+      throw new ResourceNotFoundError()
+    }
+
+    return { meal }
   }
 }
