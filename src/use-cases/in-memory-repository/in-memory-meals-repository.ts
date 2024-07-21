@@ -34,10 +34,6 @@ export class InMemoryMealsRepository implements MealRepository {
   async update(mealsInput: UpdateMealsInput) {
     const mealIndex = this.meals.findIndex((meal) => meal.id === mealsInput.id)
 
-    if (mealIndex < 0) {
-      return null
-    }
-
     const foundMeal = this.meals[mealIndex]
 
     this.meals[mealIndex] = {

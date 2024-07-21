@@ -13,7 +13,7 @@ interface UpdateMealRequestUseCase {
 }
 
 interface UpdateMealUseCaseResponse {
-  meal: Meal
+  updatedMeal: Meal
 }
 
 export class UpdateMealUseCase {
@@ -37,6 +37,14 @@ export class UpdateMealUseCase {
       throw new ResourceNotFoundError()
     }
 
-    return { meal }
+    const updatedMeal = await this.mealsRepository.update({
+      id: mealId,
+      created_at,
+      description,
+      name,
+      part_of_diet,
+    })
+
+    return { updatedMeal }
   }
 }
