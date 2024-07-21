@@ -45,9 +45,6 @@ export class InMemoryMealsRepository implements MealRepository {
       user_id: foundMeal.user_id,
     }
 
-    const meal = this.meals[mealIndex]
-
-    return meal
-    // TODO: ver se esse código pode ficar mais limpo
+    return this.meals[mealIndex]
   }
 }
