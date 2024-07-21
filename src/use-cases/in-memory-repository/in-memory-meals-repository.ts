@@ -31,6 +31,21 @@ export class InMemoryMealsRepository implements MealRepository {
   }
 
   async update(mealsInput: Prisma.MealUpdateInput) {
-    
+    const mealIndex = this.meals.findIndex((meal) => meal.id === mealsInput.id)
+
+    if (mealIndex < 0) {
+      return null
+    }
+
+    const foundMeal = this.meals[mealIndex]
+
+    this.meals[mealIndex] = {
+      created_at: mealsInput.created_at ?? foundMeal.created_at,
+      description: mealsInput.description ?? foundMeal.description,
+      id: foundMeal.id,
+      name: mealsInput.name ?? foundMeal.name,
+      part_of_diet: mealsInput.part_of_diet ?? foundMeal.part_of_diet,
+      user_id: foundMeal.user_id,
+    }
   }
 }
