@@ -6,10 +6,10 @@ import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 interface UpdateMealRequestUseCase {
   userId: string
   mealId: string
-  name: string | null | undefined
-  description: string | null | undefined
-  created_at: Date | null | undefined
-  part_of_diet: boolean | null | undefined
+  name?: string | null | undefined
+  description?: string | null | undefined
+  created_at?: Date | null | undefined
+  part_of_diet?: boolean | null | undefined
 }
 
 interface UpdateMealUseCaseResponse {
@@ -44,6 +44,10 @@ export class UpdateMealUseCase {
       name,
       part_of_diet,
     })
+
+    // TODO: lógica para resetar a streak caso ela seja falsa
+    // NÃO BASTA APENAS AUMENTAR A STREAK, PRECISAMOS, CASO ELA TENHA VOLTADO A 0, PEGAR O CONTADOR DE ONDE FOI PARADO
+    // TAMBÉM PRECISAMOS MUDAR O LONGEST STREAK CASO ELA ESTEJA LIGADA A UMA REFEIÇÃO QUE DEVIA SER FORA DA DIETA
 
     return { updatedMeal }
   }
