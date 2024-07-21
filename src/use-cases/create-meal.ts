@@ -1,6 +1,7 @@
 import { MealRepository } from '@/repositories/meal-repository'
 import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
+import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 
 interface CreateMealRequest {
   name: string
@@ -25,7 +26,12 @@ export class CreateMealUseCase {
     part_of_diet,
     user_id,
   }: CreateMealRequest): Promise<CreateMealResponse> {
-    // TODO: IF USER DOES NOT EXIST, SEND AN ERROR
+    const user = await this.userRepository.findById(user_id)
+
+    if (!user) {
+      throw new ResourceNotFoundError()
+    }
+
     const meal = await this.mealUserRepository.create({
       name,
       description,
