@@ -1,5 +1,6 @@
 import { MealRepository } from '@/repositories/meal-repository'
 import { Prisma, Meal } from '@prisma/client'
+import { UpdateMealsInput } from 'meal_types'
 import { randomUUID } from 'crypto'
 
 export class InMemoryMealsRepository implements MealRepository {
@@ -30,7 +31,7 @@ export class InMemoryMealsRepository implements MealRepository {
     return meal
   }
 
-  async update(mealsInput: Prisma.MealUpdateInput) {
+  async update(mealsInput: UpdateMealsInput) {
     const mealIndex = this.meals.findIndex((meal) => meal.id === mealsInput.id)
 
     if (mealIndex < 0) {
@@ -47,5 +48,10 @@ export class InMemoryMealsRepository implements MealRepository {
       part_of_diet: mealsInput.part_of_diet ?? foundMeal.part_of_diet,
       user_id: foundMeal.user_id,
     }
+
+    const meal = this.meals[mealIndex]
+
+    return meal
+    // TODO: ver se esse código pode ficar mais limpo
   }
 }
