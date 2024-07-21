@@ -67,8 +67,39 @@ describe('Create Meat Unit Test', () => {
     })
 
     const userUpdated = await userRepository.findById(user.id)
-    if (userUpdated) {
-      expect(userUpdated.current_streak).toBe(2)
-    }
+    expect(userUpdated?.current_streak).toBe(2)
+  })
+
+  it('should decrease streak to 0 when diet is not part of diet', async () => {
+    const userCreated = await userRepository.create({
+      email: 'lucas.monteiro@gmail.com',
+      name: 'Lucas',
+      password_hash: '123456',
+    })
+
+    await sut.execute({
+      user_id: userCreated.id,
+      name: '200g de frango',
+      description: '200g de peito de frango',
+      part_of_diet: true,
+    })
+
+    await sut.execute({
+      user_id: userCreated.id,
+      name: '200g de batata doce',
+      description: '200g de peito de batata doce',
+      part_of_diet: true,
+    })
+
+    await sut.execute({
+      user_id: userCreated.id,
+      name: 'pizza',
+      description: 'pizza deliciosa',
+      part_of_diet: false,
+    })
+
+    const user = await userRepository.findById(userCreated.id)
+
+    expect(user?.current_streak).toBe(0)
   })
 })
