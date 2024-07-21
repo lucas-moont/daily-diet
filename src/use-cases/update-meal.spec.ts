@@ -39,4 +39,32 @@ describe('Unit tests for update meals', () => {
       description: 'Janta',
     })
   })
+
+  it('should be able to get updated meal information', async () => {
+    const user = await usersRepository.create({
+      email: 'lucas.monteiro@gmail.com',
+      name: 'Lucas',
+      password_hash: '123456',
+    })
+
+    const meal = await mealsRepository.create({
+      name: 'Arroz e feijão',
+      description: 'Almoço',
+      user_id: user.id,
+      part_of_diet: true,
+    })
+
+    await sut.execute({
+      description: 'Janta',
+      userId: user.id,
+      mealId: meal.id,
+    })
+
+    const updatedMeal = await mealsRepository.findById(meal.id)
+
+    expect(updatedMeal).toMatchObject({
+      name: 'Arroz e feijão',
+      description: 'Janta',
+    })
+  })
 })
