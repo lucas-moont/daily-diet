@@ -52,4 +52,6 @@ describe('Unit tests for deleting meals', () => {
 
     expect(mealsQuantity).toBe(2)
   })
+
+  // TODO: test for deletion having influence on streak
 })
