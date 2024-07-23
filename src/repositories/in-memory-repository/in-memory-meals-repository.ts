@@ -59,4 +59,12 @@ export class InMemoryMealsRepository implements MealRepository {
 
     this.meals.splice(indexToRemove, 1)
   }
+
+  async fetchMealsByUserId(userId: string, page: number) {
+    const meals = this.meals
+      .filter((meal) => meal.user_id === userId)
+      .slice((page - 1) * 20, page * 20)
+
+    return meals
+  }
 }

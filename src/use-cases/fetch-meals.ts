@@ -1,6 +1,7 @@
 import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
+import { MealRepository } from '@/repositories/meal-repository'
 
 interface FetchMealsUseCaseRequest {
   userId: string
@@ -12,7 +13,10 @@ interface FetchMealsUseCaseResponse {
 }
 
 export class FetchMealsUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private mealsRepository: MealRepository,
+  ) {}
 
   async execute({
     userId,
@@ -24,6 +28,8 @@ export class FetchMealsUseCase {
       throw new ResourceNotFoundError()
     }
 
-    return { meals: [] }
+    const meals = await this.mealsRepository.fetchMealsByUserId(userId, page)
+
+    return { meals }
   }
 }

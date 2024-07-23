@@ -7,4 +7,5 @@ export interface MealRepository {
   update(mealsInput: UpdateMealsInput): Promise<Meal>
   findByUserId(userId: string): Promise<Meal[]>
   delete(mealId: string): Promise<void>
+  fetchMealsByUserId(userId: string, page: number): Promise<Meal[]>
 }
