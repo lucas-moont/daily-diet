@@ -41,7 +41,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     return userFound
   }
 
-  async update_current_streak(part_of_diet: boolean, id: string) {
+  async updateCurrentStreak(part_of_diet: boolean, id: string) {
     const userIndex = this.users.findIndex((user) => user.id === id)
     if (part_of_diet === true) {
       this.users[userIndex].current_streak++
@@ -49,14 +49,14 @@ export class InMemoryUsersRepository implements UsersRepository {
         this.users[userIndex].current_streak >
         this.users[userIndex].longest_streak
       ) {
-        this.update_longest_streak(userIndex)
+        this.updateLongestStreak(userIndex)
       }
     } else {
       this.users[userIndex].current_streak = 0
     }
   }
 
-  async update_longest_streak(index: number) {
+  async updateLongestStreak(index: number) {
     this.users[index].longest_streak = this.users[index].current_streak
   }
 }

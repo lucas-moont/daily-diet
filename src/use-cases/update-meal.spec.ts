@@ -1,6 +1,6 @@
 import { it, describe, beforeEach, expect } from 'vitest'
-import { InMemoryUsersRepository } from './in-memory-repository/in-memory-users-repository'
-import { InMemoryMealsRepository } from './in-memory-repository/in-memory-meals-repository'
+import { InMemoryUsersRepository } from '../repositories/in-memory-repository/in-memory-users-repository'
+import { InMemoryMealsRepository } from '../repositories/in-memory-repository/in-memory-meals-repository'
 import { UpdateMealUseCase } from './update-meal'
 
 let usersRepository: InMemoryUsersRepository

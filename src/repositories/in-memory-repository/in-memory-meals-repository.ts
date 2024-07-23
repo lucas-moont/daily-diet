@@ -47,4 +47,10 @@ export class InMemoryMealsRepository implements MealRepository {
 
     return this.meals[mealIndex]
   }
+
+  async findByUserId(userId: string) {
+    const foundMeals = this.meals.filter((meal) => meal.user_id === userId)
+
+    return foundMeals
+  }
 }

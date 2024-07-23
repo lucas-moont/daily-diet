@@ -39,7 +39,7 @@ export class CreateMealUseCase {
       user_id,
     })
 
-    await this.userRepository.update_current_streak(part_of_diet, user_id)
+    await this.userRepository.updateCurrentStreak(part_of_diet, user_id)
 
     return {
       meal,
