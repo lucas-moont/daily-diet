@@ -53,4 +53,10 @@ export class InMemoryMealsRepository implements MealRepository {
 
     return foundMeals
   }
+
+  async delete(mealId: string): Promise<void> {
+    const indexToRemove = this.meals.findIndex((meal) => meal.id === mealId)
+
+    this.meals.slice(indexToRemove, 1)
+  }
 }

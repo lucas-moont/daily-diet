@@ -20,5 +20,8 @@ export class DeleteMealUseCase {
     if (!user || !meal) {
       throw new ResourceNotFoundError()
     }
+
+    await this.mealsRepository.delete(mealId)
   }
 }
+// TODO: teste para deletar a refeição

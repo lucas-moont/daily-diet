@@ -6,4 +6,5 @@ export interface MealRepository {
   findById(id: string): Promise<Meal | null>
   update(mealsInput: UpdateMealsInput): Promise<Meal>
   findByUserId(userId: string): Promise<Meal[]>
+  delete(mealId: string): Promise<void>
 }
