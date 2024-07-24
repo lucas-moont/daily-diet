@@ -59,4 +59,48 @@ describe('Fetch meals unit test', () => {
 
     expect(meals).toHaveLength(3)
   })
+
+  it('it should be able to fetch image depending on page', async () => {
+    const user = await usersRepository.create({
+      name: 'Lucas',
+      email: 'lucas.monteiro@savvi.com.br',
+      password_hash: '123456',
+    })
+
+    for (let index = 0; index < 22; index++) {
+      await mealsRepository.create({
+        name: 'Refeição qualquer',
+        description: 'Descrição',
+        user_id: user.id,
+        id: `refeição-${index + 1}`,
+      })
+    }
+
+    const { meals } = await sut.execute({
+      userId: user.id,
+      page: 2,
+    })
+
+    console.log(meals)
+
+    expect(meals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'Refeição qualquer',
+          id: 'refeição-21',
+        }),
+      ]),
+    )
+
+    expect(meals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'Refeição qualquer',
+          id: 'refeição-22',
+        }),
+      ]),
+    )
+
+    expect(meals).toHaveLength(2)
+  })
 })
