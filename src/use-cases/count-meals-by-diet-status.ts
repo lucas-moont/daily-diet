@@ -3,16 +3,16 @@ import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 
-interface FetchMealsByDietStatusRequest {
+interface CountMealsByDietStatusRequest {
   userId: string
   partOfDiet: boolean
 }
 
-interface FetchMealsByDietStatusResponse {
+interface CountMealsByDietStatusResponse {
   meals: Meal[]
 }
 
-export class FetchMealsByDietStatusUseCase {
+export class CountMealsByDietStatusUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private mealsRepository: MealRepository,
@@ -21,7 +21,7 @@ export class FetchMealsByDietStatusUseCase {
   async execute({
     userId,
     partOfDiet,
-  }: FetchMealsByDietStatusRequest): Promise<FetchMealsByDietStatusResponse> {
+  }: CountMealsByDietStatusRequest): Promise<CountMealsByDietStatusResponse> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {
