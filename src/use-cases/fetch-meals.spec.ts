@@ -81,8 +81,6 @@ describe('Fetch meals unit test', () => {
       page: 2,
     })
 
-    console.log(meals)
-
     expect(meals).toEqual(
       expect.arrayContaining([
         expect.objectContaining({

@@ -36,8 +36,6 @@ describe('Get meal unit tests', () => {
       userId: '1',
     })
 
-    console.log(meal)
-
     expect(meal).toMatchObject({
       name: 'Feijão',
       id: '1',
