@@ -37,13 +37,16 @@ export class UpdateMealUseCase {
       throw new ResourceNotFoundError()
     }
 
-    const updatedMeal = await this.mealsRepository.update({
-      id: mealId,
-      created_at,
-      description,
-      name,
-      part_of_diet,
-    })
+    const updatedMeal = await this.mealsRepository.update(
+      {
+        id: mealId,
+        created_at,
+        description,
+        name,
+        part_of_diet,
+      },
+      userId,
+    )
 
     // TODO: lógica para resetar a streak caso ela seja falsa
     // NÃO BASTA APENAS AUMENTAR A STREAK, PRECISAMOS, CASO ELA TENHA VOLTADO A 0, PEGAR O CONTADOR DE ONDE FOI PARADO
