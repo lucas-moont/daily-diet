@@ -80,4 +80,41 @@ describe('Count meals by diet status unit tests', () => {
 
     expect(amount).toBe(2)
   })
+
+  it('should be able to get meal only of one user', async () => {
+    usersRepository.create({
+      name: 'João de Senzi',
+      email: 'advogadodefamoso@email.com',
+      password_hash: '123456',
+      id: '2',
+    })
+
+    await mealsRepository.create({
+      name: 'hamburgão',
+      description: 'lanche',
+      user_id: '1',
+      part_of_diet: true,
+    })
+
+    await mealsRepository.create({
+      name: 'Macarrão',
+      description: 'almoço',
+      user_id: '1',
+      part_of_diet: true,
+    })
+
+    await mealsRepository.create({
+      name: 'hamburgão',
+      description: 'lanche',
+      user_id: '2',
+      part_of_diet: false,
+    })
+
+    const { amount } = await sut.execute({
+      partOfDiet: true,
+      userId: '1',
+    })
+
+    expect(amount).toBe(2)
+  })
 })
