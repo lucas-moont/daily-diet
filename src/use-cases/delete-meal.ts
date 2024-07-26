@@ -21,7 +21,7 @@ export class DeleteMealUseCase {
       throw new ResourceNotFoundError()
     }
 
-    await this.mealsRepository.delete(mealId)
+    await this.mealsRepository.delete(mealId, userId)
   }
 }
 // TODO: teste para deletar a refeição

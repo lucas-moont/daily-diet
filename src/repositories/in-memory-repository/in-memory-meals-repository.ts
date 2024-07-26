@@ -31,7 +31,6 @@ export class InMemoryMealsRepository implements MealRepository {
     return meal
   }
 
-  // TODO: VERIFICAR TAMBÉM O USER ID
   async update(mealsInput: UpdateMealsInput, userId: string) {
     const mealIndex = this.meals.findIndex(
       (meal) => meal.id === mealsInput.id && meal.user_id === userId,
@@ -57,9 +56,10 @@ export class InMemoryMealsRepository implements MealRepository {
     return foundMeals
   }
 
-  // TODO: VERIFICAR TAMBÉM O USER ID
-  async delete(mealId: string): Promise<void> {
-    const indexToRemove = this.meals.findIndex((meal) => meal.id === mealId)
+  async delete(mealId: string, userId: string): Promise<void> {
+    const indexToRemove = this.meals.findIndex(
+      (meal) => meal.id === mealId && meal.user_id === userId,
+    )
 
     this.meals.splice(indexToRemove, 1)
   }
