@@ -8,4 +8,5 @@ export interface MealRepository {
   findByUserId(userId: string): Promise<Meal[]>
   delete(mealId: string): Promise<void>
   fetchMealsByUserId(userId: string, page: number): Promise<Meal[]>
+  countMealsByDietStatus(userId: string, partOfDiet: boolean): Promise<number>
 }

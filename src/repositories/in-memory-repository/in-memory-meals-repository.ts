@@ -67,4 +67,12 @@ export class InMemoryMealsRepository implements MealRepository {
 
     return meals
   }
+
+  async countMealsByDietStatus(userId: string, partOfDiet: boolean) {
+    const amount = this.meals.filter(
+      (meal) => meal.user_id === userId && meal.part_of_diet === partOfDiet,
+    ).length
+
+    return amount
+  }
 }

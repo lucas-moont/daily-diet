@@ -1,6 +1,5 @@
 import { MealRepository } from '@/repositories/meal-repository'
 import { UsersRepository } from '@/repositories/user-repository'
-import { Meal } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 
 interface CountMealsByDietStatusRequest {
@@ -9,7 +8,7 @@ interface CountMealsByDietStatusRequest {
 }
 
 interface CountMealsByDietStatusResponse {
-  meals: Meal[]
+  amount: number
 }
 
 export class CountMealsByDietStatusUseCase {
@@ -28,6 +27,11 @@ export class CountMealsByDietStatusUseCase {
       throw new ResourceNotFoundError()
     }
 
-    const meals = await this.mealsRepository.
+    const amount = await this.mealsRepository.countMealsByDietStatus(
+      userId,
+      partOfDiet,
+    )
+
+    return { amount }
   }
 }
