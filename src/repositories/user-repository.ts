@@ -6,4 +6,5 @@ export interface UsersRepository {
   updateCurrentStreak(part_of_diet: boolean, id: string): void
   findById(id: string): Promise<User | null>
   updateLongestStreak(index: number): void
+  getLongestStreak(userId: string): Promise<number>
 }
