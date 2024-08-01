@@ -7,4 +7,9 @@ export interface UsersRepository {
   findById(id: string): Promise<User | null>
   updateLongestStreak(index: number): void
   getLongestStreak(userId: string): Promise<number>
+  reUpdateStreaks(
+    id: string,
+    current_streak: number,
+    longest_streak: number,
+  ): Promise<void>
 }

@@ -60,6 +60,19 @@ export class InMemoryUsersRepository implements UsersRepository {
     this.users[index].longest_streak = this.users[index].current_streak
   }
 
+  async reUpdateStreaks(
+    id: string,
+    current_streak: number,
+    longest_streak: number,
+  ) {
+    const userIndex = await this.users.findIndex((user) => user.id === id)
+
+    if (userIndex !== -1) {
+      this.users[userIndex].current_streak = current_streak
+      this.users[userIndex].longest_streak = longest_streak
+    }
+  }
+
   async getLongestStreak(userId: string) {
     const record = this.users.find((user) => user.id === userId)?.longest_streak
     if (!record) {

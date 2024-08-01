@@ -48,6 +48,10 @@ export class UpdateMealUseCase {
       userId,
     )
 
+    if(meal.part_of_diet !== part_of_diet) {
+      await this.usersRepository.updateCurrentStreak()
+    }
+
     // TODO: lógica para resetar a streak caso ela seja falsa
     // NÃO BASTA APENAS AUMENTAR A STREAK, PRECISAMOS, CASO ELA TENHA VOLTADO A 0, PEGAR O CONTADOR DE ONDE FOI PARADO
     // TAMBÉM PRECISAMOS MUDAR O LONGEST STREAK CASO ELA ESTEJA LIGADA A UMA REFEIÇÃO QUE DEVIA SER FORA DA DIETA
