@@ -8,7 +8,7 @@ let mealsRepository: InMemoryMealsRepository
 let sut: UpdateMealUseCase
 
 describe('Unit tests for update meals', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository()
     mealsRepository = new InMemoryMealsRepository()
     sut = new UpdateMealUseCase(usersRepository, mealsRepository)
@@ -66,5 +66,34 @@ describe('Unit tests for update meals', () => {
       name: 'Arroz e feijão',
       description: 'Janta',
     })
+  })
+
+  it('should recalculate string when a meal is updated', async () => {
+    const user = await usersRepository.create({
+      email: 'lucas.monteiro@gmail.com',
+      name: 'Lucas',
+      password_hash: '123456',
+    })
+
+    for (let i = 1; i < 21; i++) {
+      await mealsRepository.create({
+        description: 'Descriçãlo qualquer',
+        name: `Refeição ${i}`,
+        user_id: user.id,
+        id: `ref-${i}`,
+        part_of_diet: true,
+      })
+    }
+
+    await sut.execute({
+      mealId: 'ref-20',
+      userId: user.id,
+      part_of_diet: false,
+    })
+
+    const foundUser = await usersRepository.findById(user.id)
+
+    expect(foundUser?.longest_streak).toBe(19)
+    expect(foundUser?.current_streak).toBe(0)
   })
 })
