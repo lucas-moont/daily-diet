@@ -2,6 +2,7 @@ import { MealRepository } from '@/repositories/meal-repository'
 import { UsersRepository } from '@/repositories/user-repository'
 import { Meal } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
+import { recalculateStreak } from '@/utils/recalculate-streak'
 
 interface UpdateMealRequestUseCase {
   userId: string
@@ -48,13 +49,15 @@ export class UpdateMealUseCase {
       userId,
     )
 
-    if(meal.part_of_diet !== part_of_diet) {
-      await this.usersRepository.updateCurrentStreak()
+    if (meal.part_of_diet !== part_of_diet) {
+      const meals = await this.mealsRepository.findByUserId(userId)
+      const { current_streak, longest_streak } = await recalculateStreak(meals)
+      await this.usersRepository.reUpdateStreaks(
+        userId,
+        current_streak,
+        longest_streak,
+      )
     }
-
-    // TODO: lógica para resetar a streak caso ela seja falsa
-    // NÃO BASTA APENAS AUMENTAR A STREAK, PRECISAMOS, CASO ELA TENHA VOLTADO A 0, PEGAR O CONTADOR DE ONDE FOI PARADO
-    // TAMBÉM PRECISAMOS MUDAR O LONGEST STREAK CASO ELA ESTEJA LIGADA A UMA REFEIÇÃO QUE DEVIA SER FORA DA DIETA
 
     return { updatedMeal }
   }

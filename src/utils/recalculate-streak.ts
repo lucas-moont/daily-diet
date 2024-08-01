@@ -2,20 +2,20 @@ import { Meal } from '@prisma/client'
 
 export async function recalculateStreak(
   meals: Meal[],
-): Promise<{ currentStreak: number; longestStreak: number }> {
-  let currentStreak = 0
-  let longestStreak = 0
+): Promise<{ current_streak: number; longest_streak: number }> {
+  let current_streak = 0
+  let longest_streak = 0
 
   for (const meal of meals) {
     if (meal.part_of_diet) {
-      currentStreak++
-      if (currentStreak > longestStreak) {
-        longestStreak = currentStreak
+      current_streak++
+      if (current_streak > longest_streak) {
+        longest_streak = current_streak
       }
     } else {
-      currentStreak = 0
+      current_streak = 0
     }
   }
 
-  return { currentStreak, longestStreak }
+  return { current_streak, longest_streak }
 }
