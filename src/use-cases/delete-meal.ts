@@ -1,6 +1,7 @@
 import { MealRepository } from '@/repositories/meal-repository'
 import { UsersRepository } from '@/repositories/user-repository'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
+import { recalculateStreak } from '@/utils/recalculate-streak'
 
 interface DeleteMealUseCaseRequest {
   userId: string
@@ -22,5 +23,13 @@ export class DeleteMealUseCase {
     }
 
     await this.mealsRepository.delete(mealId, userId)
+
+    const meals = await this.mealsRepository.findByUserId(userId)
+    const { current_streak, longest_streak } = await recalculateStreak(meals)
+    await this.userRepository.reUpdateStreaks(
+      userId,
+      current_streak,
+      longest_streak,
+    )
   }
 }
