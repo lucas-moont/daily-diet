@@ -101,5 +101,6 @@ describe('Create Meat Unit Test', () => {
     const user = await userRepository.findById(userCreated.id)
 
     expect(user?.current_streak).toBe(0)
+    expect(user?.longest_streak).toBe(2)
   })
 })
