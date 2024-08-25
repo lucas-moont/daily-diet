@@ -4,7 +4,7 @@ import { UpdateMealsInput } from 'meal_types'
 export interface MealRepository {
   create(mealsInput: Prisma.MealUncheckedCreateInput): Promise<Meal>
   findById(id: string): Promise<Meal | null>
-  update(mealsInput: UpdateMealsInput, userId: string): Promise<Meal>
+  update(mealsInput: UpdateMealsInput, userId: string): Promise<Meal | null>
   findByUserId(userId: string): Promise<Meal[]>
   delete(mealId: string, userId: string): Promise<void>
   fetchMealsByUserId(userId: string, page: number): Promise<Meal[]>
