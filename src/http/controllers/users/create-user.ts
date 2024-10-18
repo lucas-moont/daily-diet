@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { EmailAlreadyRegistered } from '@/use-cases/errors/email-already-registered-error'
 import { makeCreateUserService } from '@/use-cases/factories/make-create-user-use-case'
 import { FastifyRequest, FastifyReply } from 'fastify'

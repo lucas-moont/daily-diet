@@ -14,7 +14,7 @@ interface UpdateMealRequestUseCase {
 }
 
 interface UpdateMealUseCaseResponse {
-  updatedMeal: Meal
+  updatedMeal: Meal | null
 }
 
 export class UpdateMealUseCase {
