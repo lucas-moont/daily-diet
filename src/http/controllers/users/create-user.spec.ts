@@ -1,5 +1,24 @@
-import { expect, it } from "vitest";
+import { it, describe, beforeAll, afterAll, expect } from 'vitest'
+import request from 'supertest'
+import { app } from '@/app'
+import { randomUUID } from 'crypto'
 
-it('should be 1', () => {
-  expect(1).toBe(1)
+beforeAll(() => {
+  app.ready()
+})
+
+afterAll(() => {
+  app.close()
+})
+
+describe('e2e testing for registration', () => {
+  it('should be able to register', async () => {
+    const response = await request(app.server).post('/sign-up').send({
+      name: 'Lucas',
+      email: 'luks.monteiro.13@gmail.com',
+      password: randomUUID(),
+    })
+
+    expect(response.statusCode).toBe(201)
+  })
 })
