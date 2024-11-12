@@ -9,4 +9,5 @@ export interface MealRepository {
   delete(mealId: string, userId: string): Promise<void>
   fetchMealsByUserId(userId: string, page: number): Promise<Meal[]>
   countMealsByDietStatus(userId: string, partOfDiet: boolean): Promise<number>
+  countAllMeals(userId: string): Promise<number | null>
 }

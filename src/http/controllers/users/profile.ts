@@ -22,3 +22,6 @@ export async function getProfileInfo(req: FastifyRequest, res: FastifyReply) {
     }
   }
 }
+
+//TODO: lembre de finalizar o use case de pegar as métricas
+//TODO: Assistir a aula IMPLEMENTANDO JWT NO FASTIFY a partir do min 09:45 para implementar o JWT aqui

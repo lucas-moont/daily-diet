@@ -79,4 +79,10 @@ export class InMemoryMealsRepository implements MealRepository {
 
     return amount
   }
+
+  async countAllMeals(userId: string): Promise<number | null> {
+    const amount = this.meals.filter((meal) => meal.user_id === userId).length
+
+    return amount
+  }
 }

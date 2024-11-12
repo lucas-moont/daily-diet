@@ -43,6 +43,8 @@ export class FetchUserMetricsUseCase {
     const { user } = await getUserProfile.execute({ userId })
 
     return {
+      //TODO: fazer use case de pegar a qntd de refeições
+      //GPT JÁ DEU A DICA DE COMO FAZER COM O PRISMA
       totalOfMeals: 2,
       partOfDietMealsQnt: mealsThatArePartOfDiet.amount,
       OffTheDietMealsQnt: mealsThatAreOffTheDiet.amount,
