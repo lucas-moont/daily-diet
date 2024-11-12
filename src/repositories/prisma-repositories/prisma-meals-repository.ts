@@ -99,4 +99,14 @@ export class PrismaMealsRepository implements MealRepository {
 
     return amount
   }
+
+  async countAllMeals(userId: string): Promise<number | null> {
+    const amount = await prisma.meal.count({
+      where: {
+        user_id: userId,
+      },
+    })
+
+    return amount
+  }
 }
