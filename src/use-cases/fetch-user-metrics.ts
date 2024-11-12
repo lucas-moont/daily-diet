@@ -9,11 +9,13 @@ interface FetchUserMetricsRequest {
 }
 
 interface FetchUserMetricsResponse {
-  totalOfMeals: number
-  partOfDietMealsQnt: number
-  OffTheDietMealsQnt: number
-  bestStreak: number
-  currentStreak: number
+  metrics: {
+    totalOfMeals: number
+    partOfDietMealsQnt: number
+    offTheDietMealsQnt: number
+    bestStreak: number
+    currentStreak: number
+  }
 }
 
 export class FetchUserMetricsUseCase {
@@ -49,11 +51,13 @@ export class FetchUserMetricsUseCase {
     const { user } = await getUserProfile.execute({ userId })
 
     return {
-      totalOfMeals: allMealsAmount.quantity ?? 0,
-      partOfDietMealsQnt: mealsThatArePartOfDiet.amount,
-      OffTheDietMealsQnt: mealsThatAreOffTheDiet.amount,
-      bestStreak: user.longest_streak,
-      currentStreak: user.current_streak,
+      metrics: {
+        totalOfMeals: allMealsAmount.quantity ?? 0,
+        partOfDietMealsQnt: mealsThatArePartOfDiet.amount,
+        offTheDietMealsQnt: mealsThatAreOffTheDiet.amount,
+        bestStreak: user.longest_streak,
+        currentStreak: user.current_streak,
+      },
     }
   }
 }
