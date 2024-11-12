@@ -1,28 +1,27 @@
 import { UsersRepository } from '@/repositories/user-repository'
 import { ResourceNotFoundError } from './errors/resouce-not-found-error'
+import { User } from '@prisma/client'
 
-interface GetLongestStreakRequest {
+interface GetUserProfileRequest {
   userId: string
 }
 
-interface GetLongestStreakResponse {
-  record: number
+interface GetUserProfileResponse {
+  user: User
 }
 
-export class GetLongestStreakUseCase {
+export class GetUserProfileUseCase {
   constructor(private userRepository: UsersRepository) {}
 
   async execute({
     userId,
-  }: GetLongestStreakRequest): Promise<GetLongestStreakResponse> {
+  }: GetUserProfileRequest): Promise<GetUserProfileResponse> {
     const user = await this.userRepository.findById(userId)
 
     if (!user) {
       throw new ResourceNotFoundError()
     }
 
-    const record = await this.userRepository.getLongestStreak(userId)
-
-    return { record }
+    return { user }
   }
 }
