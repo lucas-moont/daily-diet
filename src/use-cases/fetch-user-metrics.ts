@@ -2,6 +2,7 @@ import { UsersRepository } from '@/repositories/user-repository'
 import { MealRepository } from '@/repositories/meal-repository'
 import { GetUserProfileUseCase } from './get-user-profile'
 import { CountMealsByDietStatusUseCase } from './count-meals-by-diet-status'
+import { GetMealsCountUseCase } from './get-meals-count'
 
 interface FetchUserMetricsRequest {
   userId: string
@@ -29,6 +30,7 @@ export class FetchUserMetricsUseCase {
       this.userRepository,
       this.mealsRepository,
     )
+    const countAllMealsQuantity = new GetMealsCountUseCase(this.mealsRepository)
 
     const mealsThatArePartOfDiet = await countMealsByDietStatus.execute({
       partOfDiet: true,
@@ -40,12 +42,14 @@ export class FetchUserMetricsUseCase {
       userId,
     })
 
+    const allMealsAmount = await countAllMealsQuantity.execute({
+      userId,
+    })
+
     const { user } = await getUserProfile.execute({ userId })
 
     return {
-      //TODO: fazer use case de pegar a qntd de refeições
-      //GPT JÁ DEU A DICA DE COMO FAZER COM O PRISMA
-      totalOfMeals: 2,
+      totalOfMeals: allMealsAmount.quantity ?? 0,
       partOfDietMealsQnt: mealsThatArePartOfDiet.amount,
       OffTheDietMealsQnt: mealsThatAreOffTheDiet.amount,
       bestStreak: user.longest_streak,
