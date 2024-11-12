@@ -10,7 +10,7 @@ export async function register(
   const registerBodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
-    password: z.string().uuid().min(6),
+    password: z.string().min(6),
   })
 
   const { name, email, password } = registerBodySchema.parse(request.body)
@@ -29,6 +29,5 @@ export async function register(
       })
     }
   }
-
   response.status(201).send()
 }
