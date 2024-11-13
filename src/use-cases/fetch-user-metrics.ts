@@ -3,6 +3,7 @@ import { MealRepository } from '@/repositories/meal-repository'
 import { GetUserProfileUseCase } from './get-user-profile'
 import { CountMealsByDietStatusUseCase } from './count-meals-by-diet-status'
 import { GetMealsCountUseCase } from './get-meals-count'
+import { ResourceNotFoundError } from './errors/resouce-not-found-error'
 
 interface FetchUserMetricsRequest {
   userId: string
@@ -49,6 +50,10 @@ export class FetchUserMetricsUseCase {
     })
 
     const { user } = await getUserProfile.execute({ userId })
+
+    if (!mealsThatArePartOfDiet || !mealsThatAreOffTheDiet || !user) {
+      throw new ResourceNotFoundError()
+    }
 
     return {
       metrics: {
