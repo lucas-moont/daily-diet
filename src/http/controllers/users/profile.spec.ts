@@ -20,8 +20,6 @@ describe('profile testing', () => {
       .set('Authorization', `Bearer ${token}`)
       .send()
 
-    console.log(profileResponse.body)
-
     expect(profileResponse.statusCode).toEqual(200)
     expect(profileResponse.body.user).toEqual(
       expect.objectContaining({
