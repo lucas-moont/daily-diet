@@ -10,7 +10,7 @@ export async function profile(req: FastifyRequest, res: FastifyReply) {
     const { user } = await getUserProfileInfo.execute({
       userId,
     })
-    res.status(200).send({ ...user, password_hash: undefined })
+    res.status(200).send({ user: { ...user, password_hash: undefined } })
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       res.status(404).send({
