@@ -1,19 +1,18 @@
-import { z } from 'zod'
-import { makeGetLongestStreak } from '@/use-cases/factories/make-get-longest-streak'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { ResourceNotFoundError } from '@/use-cases/errors/resouce-not-found-error'
+import { makeGetProfile } from '@/use-cases/factories/make-get-profile'
 
-export async function getProfileInfo(req: FastifyRequest, res: FastifyReply) {
-  const GetLongestStreakSchema = z.object({
-    userId: z.string(),
-  })
+export async function profile(req: FastifyRequest, res: FastifyReply) {
+  await req.jwtVerify()
 
-  const { userId } = GetLongestStreakSchema.parse(req.params)
+  const userId = req.user.sub
 
   try {
-    const getLongestStreak = makeGetLongestStreak()
-    const { record } = await getLongestStreak.execute({ userId })
-    res.status(200).send({ record })
+    const getUserProfileInfo = makeGetProfile()
+    const { user } = await getUserProfileInfo.execute({
+      userId,
+    })
+    res.status(200).send({ ...user, password_hash: undefined })
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       res.status(404).send({
@@ -22,6 +21,3 @@ export async function getProfileInfo(req: FastifyRequest, res: FastifyReply) {
     }
   }
 }
-
-//TODO: lembre de finalizar o use case de pegar as métricas
-//TODO: Assistir a aula IMPLEMENTANDO JWT NO FASTIFY a partir do min 09:45 para implementar o JWT aqui
