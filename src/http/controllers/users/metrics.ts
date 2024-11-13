@@ -7,8 +7,12 @@ export async function metrics(req: FastifyRequest, reply: FastifyReply) {
   const fetchUserMetrics = makeFetchUserMetrics()
 
   try {
-    const { metrics } = fetchUserMetrics.execute({
+    const { metrics } = await fetchUserMetrics.execute({
       userId: req.user.sub,
+    })
+
+    reply.status(200).send({
+      metrics,
     })
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
