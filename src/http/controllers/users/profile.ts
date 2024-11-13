@@ -3,8 +3,6 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resouce-not-found-erro
 import { makeGetProfile } from '@/use-cases/factories/make-get-profile'
 
 export async function profile(req: FastifyRequest, res: FastifyReply) {
-  await req.jwtVerify()
-
   const userId = req.user.sub
 
   try {
