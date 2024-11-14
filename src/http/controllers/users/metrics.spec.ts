@@ -33,6 +33,10 @@ describe('fetch user metrics E2E', async () => {
     expect(metrics).toEqual(
       expect.objectContaining({
         totalOfMeals: 6,
+        partOfDietMealsQnt: 5,
+        offTheDietMealsQnt: 1,
+        bestStreak: 5,
+        currentStreak: 0,
       }),
     )
   })
