@@ -16,6 +16,5 @@ export async function createMeal(
     })
 
   const { meal } = response.body
-
   return meal
 }
