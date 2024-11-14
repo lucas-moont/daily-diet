@@ -26,6 +26,7 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
       reply.status(406).send({
         message: error.message,
       })
+      throw error
     }
   }
 }

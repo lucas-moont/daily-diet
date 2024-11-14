@@ -22,11 +22,12 @@ export async function register(
       email,
       password,
     })
-  } catch (err) {
-    if (err instanceof EmailAlreadyRegistered) {
+  } catch (error) {
+    if (error instanceof EmailAlreadyRegistered) {
       response.status(204).send({
-        message: err.message,
+        message: error.message,
       })
+      throw error
     }
   }
   response.status(201).send()

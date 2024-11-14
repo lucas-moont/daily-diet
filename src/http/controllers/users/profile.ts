@@ -17,5 +17,6 @@ export async function profile(req: FastifyRequest, res: FastifyReply) {
         message: err.message,
       })
     }
+    throw err
   }
 }

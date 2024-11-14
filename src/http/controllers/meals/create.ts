@@ -34,5 +34,6 @@ export async function create(req: FastifyRequest, reply: FastifyReply) {
     if (error instanceof ResourceNotFoundError) {
       reply.status(404).send({ message: error.message })
     }
+    throw error
   }
 }

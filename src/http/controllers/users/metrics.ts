@@ -20,5 +20,6 @@ export async function metrics(req: FastifyRequest, reply: FastifyReply) {
         message: err.message,
       })
     }
+    throw err
   }
 }
