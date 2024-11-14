@@ -4,8 +4,6 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
 export async function create(req: FastifyRequest, reply: FastifyReply) {
-  req.jwtVerify()
-
   const createMealBodySchema = z.object({
     name: z.string(),
     description: z.string(),

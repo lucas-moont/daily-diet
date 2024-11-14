@@ -2,12 +2,12 @@ import request from 'supertest'
 import { app } from '@/app'
 import { it, describe, beforeAll, afterAll, expect } from 'vitest'
 
-beforeAll(() => {
-  app.ready()
+beforeAll(async () => {
+  await app.ready()
 })
 
-afterAll(() => {
-  app.close()
+afterAll(async () => {
+  await app.close()
 })
 
 describe('e2e testing for authentication', () => {

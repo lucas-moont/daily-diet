@@ -3,12 +3,12 @@ import request from 'supertest'
 import { app } from '@/app'
 import { randomUUID } from 'crypto'
 
-beforeAll(() => {
-  app.ready()
+beforeAll(async () => {
+  await app.ready()
 })
 
-afterAll(() => {
-  app.close()
+afterAll(async () => {
+  await app.close()
 })
 
 describe('e2e testing for registration', () => {
