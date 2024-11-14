@@ -14,24 +14,32 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async updateCurrentStreak(part_of_diet: boolean, id: string): Promise<void> {
-    if (part_of_diet === true) {
-      prisma.user.update({
-        where: {
-          id,
-        },
-        data: { current_streak: { increment: 1 } },
-      })
-    }
-  }
-
-  async findById(id: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: {
         id,
       },
     })
 
-    return user
+    if (part_of_diet === true) {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id,
+        },
+        data: { current_streak: { increment: 1 } },
+      })
+      if (updatedUser.current_streak) {
+        if (updatedUser.current_streak > (user?.longest_streak || 0)) {
+          await this.updateLongestStreak(id)
+        }
+      }
+    } else {
+      await prisma.user.update({
+        where: {
+          id,
+        },
+        data: { current_streak: 0 },
+      })
+    }
   }
 
   async updateLongestStreak(id: string): Promise<void> {
@@ -49,6 +57,16 @@ export class PrismaUsersRepository implements UsersRepository {
         longest_streak: user?.current_streak,
       },
     })
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return user
   }
 
   async getLongestStreak(userId: string): Promise<number> {
