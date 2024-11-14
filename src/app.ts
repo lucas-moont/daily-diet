@@ -2,6 +2,7 @@ import fastify from 'fastify'
 import { userRoutes } from './http/controllers/users/routes'
 import fastifyJwt from '@fastify/jwt'
 import { env } from './env'
+import { mealRoutes } from './http/controllers/meals/routes'
 
 export const app = fastify()
 
@@ -10,3 +11,4 @@ app.register(fastifyJwt, {
 })
 
 app.register(userRoutes)
+app.register(mealRoutes)
