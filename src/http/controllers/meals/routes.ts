@@ -7,5 +7,5 @@ import { update } from './update'
 export async function mealRoutes(app: FastifyInstance) {
   app.post('/create-meal', { onRequest: verifyJwt }, create)
   app.delete('/delete-meal/:mealId', { onRequest: verifyJwt }, deleteMeal)
-  app.patch('/meal/:mealId', { onRequest: verifyJwt }, update)
+  app.put('/meal/:mealId', { onRequest: verifyJwt }, update)
 }

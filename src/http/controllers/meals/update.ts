@@ -10,7 +10,7 @@ export async function update(req: FastifyRequest, reply: FastifyReply) {
     part_of_diet: z.boolean().optional(),
   })
 
-  const updateQuerySchema = z.object({
+  const updateParamsSchema = z.object({
     mealId: z.string(),
   })
 
@@ -19,7 +19,7 @@ export async function update(req: FastifyRequest, reply: FastifyReply) {
   try {
     const { name, description, part_of_diet } = updateBodySchema.parse(req.body)
 
-    const { mealId } = updateQuerySchema.parse(req.query)
+    const { mealId } = updateParamsSchema.parse(req.params)
 
     const updateUseCase = makeUpdateUseCase()
 
